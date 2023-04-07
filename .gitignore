@@ -1,0 +1,5 @@
+.coverage*
+.DS_STORE
+staticfiles
+client/node_modules
+venv
