@@ -3,3 +3,4 @@
 staticfiles
 client/node_modules
 venv
+logs/real_estate.log
