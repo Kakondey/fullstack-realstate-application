@@ -34,4 +34,4 @@ class Profile(TimeStampUUIDModel):
     num_reviews = models.IntegerField(verbose_name=_("Number of Reviews"), default=0, null=True, blank=True)
 
     def __str__(self):
-        return f"{self.user.get_username}"
+        return f"{self.user}'s profile"
