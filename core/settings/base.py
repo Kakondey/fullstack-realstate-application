@@ -1,14 +1,17 @@
+from django.utils.log import DEFAULT_LOGGING
+import logging.config
+import logging
 import environ
 from pathlib import Path
 
 
-env=environ.Env(DEBUG=(bool,False))
+env = environ.Env(DEBUG=(bool, False))
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 environ.Env.read_env(BASE_DIR/".env")
 
 SECRET_KEY = env("SECRET_KEY")
-DEBUG=env("DEBUG")
+DEBUG = env("DEBUG")
 ALLOWED_HOSTS = env("ALLOWED_HOSTS").split(" ")
 
 DJANGO_APPS = [
@@ -20,7 +23,7 @@ DJANGO_APPS = [
     'django.contrib.staticfiles',
 ]
 
-SITE_ID=1
+SITE_ID = 1
 
 THIRD_PARTY_APPS = [
     "rest_framework",
@@ -72,8 +75,6 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 
-
-
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
@@ -122,46 +123,43 @@ MEDIA_ROOT = BASE_DIR / "mediafiles"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # defining where is our customer user model
-AUTH_USER_MODEL='users.User'
+AUTH_USER_MODEL = 'users.User'
 
 # loggers
-import logging
-import logging.config
 
-from django.utils.log import DEFAULT_LOGGING
-logger=logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
-LOG_LEVEL = "ERROR"
+LOG_LEVEL = "INFO"
 
 logging.config.dictConfig({
-    "version":1,
-    "disable_existing_loggers":False,
-    "formatters":{
-        "console":{
-            "format":"%(asctime)s %(name)-12s %(levelname)-8s %(message)s",
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "console": {
+            "format": "%(asctime)s %(name)-12s %(levelname)-8s %(message)s",
 
         },
-        "file":{"format":"%(asctime)s %(name)-12s %(levelname)-8s %(message)s"},
-        "django.server":DEFAULT_LOGGING["formatters"]["django.server"],
+        "file": {"format": "%(asctime)s %(name)-12s %(levelname)-8s %(message)s"},
+        "django.server": DEFAULT_LOGGING["formatters"]["django.server"],
     },
-    "handlers":{
-        "console":{
-            "class":"logging.StreamHandler",
-            "formatter":"console",
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "console",
         },
-        "file":{
-            "level":LOG_LEVEL,
-            "class":"logging.FileHandler",
-            "formatter":"file",
-            "filename":"logs/real_estate.log",
+        "file": {
+            "level": LOG_LEVEL,
+            "class": "logging.FileHandler",
+            "formatter": "file",
+            "filename": "logs/real_estate.log",
         },
-        "django.server":DEFAULT_LOGGING["handlers"]["django.server"],
+        "django.server": DEFAULT_LOGGING["handlers"]["django.server"],
     },
-    "loggers":{
-        "":{"level":LOG_LEVEL,"handlers":["console","file"],"propagate":False},
-        "apps":{
-            "level":LOG_LEVEL,"handlers":["console"],"propagate":False
+    "loggers": {
+        "": {"level": LOG_LEVEL, "handlers": ["console", "file"], "propagate": False},
+        "apps": {
+            "level": LOG_LEVEL, "handlers": ["console"], "propagate": False
         },
-        "django.server":DEFAULT_LOGGING["loggers"]["django.server"],
+        "django.server": DEFAULT_LOGGING["loggers"]["django.server"],
     }
 })
