@@ -35,7 +35,7 @@ class Property(TimeStampUUIDModel):
 
     user = models.ForeignKey(User, verbose_name=_("Agent, seller or Buyer"),
                              related_name="agent_buyer", on_delete=models.DO_NOTHING)
-    title = models.CharField(verbose_name=_("Property Title"), max_length=250)
+    title = models.CharField(verbose_name=_("Property Title"), max_length=250, unique=True)
     slug = AutoSlugField(populate_from="title", unique=True, always_update=True)
     ref_code = models.CharField(verbose_name=_("Property Reference Code"), max_length=255, unique=True, blank=True)
     description = models.TextField(verbose_name=_("Description"), default="Add description here...")
@@ -72,7 +72,7 @@ class Property(TimeStampUUIDModel):
 
     def save(self, *args, **kwargs):
         self.title = str.title(self.title)
-        self.description = str.description(self.description)
+        self.description = str.capitalize(self.description)
         self.ref_code = "".join(random.choices(string.ascii_uppercase+string.digits, k=10))
         super(Property, self).save(*args, **kwargs)
 
@@ -102,7 +102,7 @@ class PropertyImage(TimeStampUUIDModel):
     property = models.ForeignKey(Property, related_name="property_image", on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.photo
+        return f" {self.photo} belongs to the property {self.property.title}"
 
     class Meta:
         verbose_name = "Image"
