@@ -1,8 +1,9 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from core.settings.base import AUTH_USER_MODEL
+
 from apps.common.models import TimeStampUUIDModel
 from apps.profiles.models import Profile
+from core.settings.base import AUTH_USER_MODEL
 
 
 class Rating(TimeStampUUIDModel):
